@@ -1,0 +1,9 @@
+  - build
+
+build:
+  stage: build
+  tags:
+    - build-as-docker
+  script:
+    - docker build -t registry.njuics.cn/$CI_PROJECT_PATH:${CI_COMMIT_SHA:0:8} .
+    - docker push registry.njuics.cn/$CI_PROJECT_PATH:${CI_COMMIT_SHA:0:8}
