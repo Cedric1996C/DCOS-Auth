@@ -1,0 +1,69 @@
+{
+  "name": "react-login-authentication",
+  "version": "0.0.1",
+  "description": "Seed project for React, Browserify, Rework SPAs",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mgonto/react-browserify-spa-seed.git"
+  },
+  "authors": [
+    "Martin Gontovnikas <martin@gon.to> (http://gon.to/)"
+  ],
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "scripts": {
+    "__start": "npm run build && serve .",
+    "start": "node serve.js",
+    "restart": "npm run build && npm run start",
+    "build": "npm run build-js && npm run build-css",
+    "watch": "npm run watch-js & npm run watch-css & npm run start",
+    "test": "npm run lint -s && npm run build",
+    "build-css": "rework-npm index.css | cleancss -o public/app.css",
+    "__build-js": "browserify --extension=.jsx --extension=.js src/app.jsx | uglifyjs > public/app.js",
+    "build-js": "browserify --extension=.jsx --extension=.js src/app.jsx | uglifyjs > public/app.js",
+    "__watch-js": "watchify --extension=.jsx --extension=.js src/app.jsx -o public/app.js --debug --verbose",
+    "watch-js": "watchify --extension=.jsx --extension=.js src/app.jsx -o public/app.js --debug --verbose",
+    "__watch-css": "nodemon -e css --ignore public/app.css --exec 'rework-npm index.css -o public/app.css'",
+    "watch-css": "nodemon -e css --ignore public/app.css --exec 'rework-npm index.css -o public/app.css'",
+    "lint-eslint": "eslint .",
+    "lint-jscs": "jscs .",
+    "lint": "npm run lint-eslint && npm run lint-jscs"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mgonto/react-browserify-spa-seed/issues"
+  },
+  "homepage": "https://github.com/mgonto/react-browserify-spa-seed",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.0",
+    "flux": "^2.0.1",
+    "jwt-decode": "^1.1.0",
+    "passport": "^0.3.2",
+    "passport-ldapauth": "^2.0.0",
+    "react": "^0.13",
+    "react-mixin": "^1.1.0",
+    "react-router": "^0.13.2",
+    "reqwest": "^1.1.5",
+    "when": "^3.7.2"
+  },
+  "devDependencies": {
+    "babelify": "^6.1.0",
+    "browser-sync": "^2.1.6",
+    "browserify": "^8.0.3",
+    "clean-css": "^3.1.9",
+    "eslint": "^0.14.1",
+    "express": "^4.15.3",
+    "nodemon": "^1.5.0",
+    "rework": "^1.0.1",
+    "rework-npm": "^1.0.0",
+    "rework-npm-cli": "^0.1.1",
+    "serve": "^1.4.0",
+    "uglify-js": "^2.4.15",
+    "watchify": "^2.1.1"
+  }
+}
