@@ -1,4 +1,4 @@
-FROM node:8.1-alpine
+FROM registry.njuics.cn/library/node:6-alpine
 
 COPY . /app
 WORKDIR /app
