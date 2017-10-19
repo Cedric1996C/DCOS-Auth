@@ -32,6 +32,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(passport.initialize());
 
 app.post('/login', passport.authenticate('ldapauth', {session: false}), function(req, res) {
+  console.log(req);
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');

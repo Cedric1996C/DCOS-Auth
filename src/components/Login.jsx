@@ -20,6 +20,7 @@ export default class Login extends React.Component {
       window.close()
     }.bind(this))
   }
+
   logError(err) {
     $('#failAlert').show()
     // alert("There's an error logging in");
