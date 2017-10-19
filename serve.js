@@ -1,19 +1,20 @@
 var express      = require('express'),
     path         = require('path'),
-    config       = require('./config')
+    config       = require('./config/config')
     passport     = require('passport'),
     bodyParser   = require('body-parser'),
-    LdapStrategy = require('passport-ldapauth');
+    LdapStrategy = require('passport-ldapauth'),
+    LdapConfig   = require('./config/ldapConfig');
 
-var OPTS = {
-  server: {
-    url: 'ldap://114.212.189.138:389',
-    bindDN: 'cn=admin,dc=njuics,dc=cn',
-    bindCredentials: 'dr0w55@P#nap',
-    searchBase: 'dc=njuics,dc=cn',
-    searchFilter: '(uid={{username}})'
-  }
-};
+// var OPTS = {
+//   server: {
+//     url: 'ldap://114.212.189.138:389',
+//     bindDN: 'cn=admin,dc=njuics,dc=cn',
+//     bindCredentials: 'dr0w55@P#nap',
+//     searchBase: 'dc=njuics,dc=cn',
+//     searchFilter: '(uid={{username}})'
+//   }
+// };
 
 var app = express();
 app.use(express.static('public'))
@@ -25,7 +26,7 @@ app.post('/', function(req, res){
     res.sendFile(path.join(__dirname, 'index.html'))
 })
 
-passport.use(new LdapStrategy(OPTS));
+passport.use(new LdapStrategy(LdapConfig));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
