@@ -1,4 +1,4 @@
-module.exports = {
+var OPTS = {
   server: {
     url: 'ldap://114.212.189.138:389',
     bindDN: 'cn=admin,dc=njuics,dc=cn',
@@ -7,3 +7,5 @@ module.exports = {
     searchFilter: '(uid={{username}})'
   }
 };
+
+module.exports = OPTS;

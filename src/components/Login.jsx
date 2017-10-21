@@ -12,12 +12,13 @@ export default class Login extends React.Component {
       user: '',
       password: ''
     };
-    em.on('login', function () {
-      console.log('logg in')
+    em.on('login', function(code) {
+      console.log('logg in');
       $('#failAlert').hide()
       $('#successAlert').show();
-      window.parent.postMessage(JSON.stringify({ type: 'token', token: { uid: this.state.user } }), RETURN_URL)
-      window.close()
+      window.location = RETURN_URL+'?code='+code;
+      // window.parent.postMessage(JSON.stringify({ type: 'token', token: { uid: this.state.user } }), RETURN_URL)
+      // window.close()
     }.bind(this))
   }
 

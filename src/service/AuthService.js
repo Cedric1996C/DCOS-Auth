@@ -1,4 +1,4 @@
-import request from 'request';
+import request from 'reqwest';
 import when from 'when';
 import {LOGIN_URL, SIGNUP_URL} from '../constants/LoginConstants';
 import em from '../components/em'
@@ -24,7 +24,7 @@ class AuthService {
       .then(function(response) {
         var jwt = response.status;
         if(jwt == 'ok'){
-          em.emit('login');
+          em.emit('login', response.code);
           return true;
         }
       });
