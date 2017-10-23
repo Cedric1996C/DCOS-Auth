@@ -4,10 +4,12 @@ var express      = require('express'),
     passport     = require('passport'),
     bodyParser   = require('body-parser'),
     LdapStrategy = require('passport-ldapauth'),
-    LdapConfig   = require('./config/ldapConfig');
+    LdapConfig   = require('./config/ldapConfig'),
+    cors         = require('cors');
 var index = require('./routes/index');
 var codeGenerator = require('./lib/codeGenerator');
 var client = require('./lib/client');
+var access = require('./routes/access');
 
 var app = express();
 app.use(express.static('public'))
@@ -15,11 +17,13 @@ app.use('/', express.static(path.join(__dirname, 'index.html')))
 
 passport.use(new LdapStrategy(LdapConfig));
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(passport.initialize());
 
 app.use('/',index);
+app.use('/access',access);
 
 app.post('/login', passport.authenticate('ldapauth', {session: false}), function(req, res) {
   // console.log(req);
@@ -28,7 +32,7 @@ app.post('/login', passport.authenticate('ldapauth', {session: false}), function
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
-  res.send({ status: 'ok', code: code });
+  res.send({ status: 'ok', client: client });
 });
 
 app.listen(config.LOGINAUTH_PORT);

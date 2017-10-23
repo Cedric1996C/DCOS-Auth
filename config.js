@@ -4,6 +4,8 @@ var Config = {
     DCOSUI_URL: 'http://localhost:4200',
     LOGINAUTH_URL: 'http://localhost:3000',
     LOGINAUTH_PORT: 3000,
-    root: __dirname
+    root: __dirname,
+   	clientId: "dc-njuics-cn",
+  	secret: "dcos-nap"
 }
 module.exports = Config;

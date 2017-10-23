@@ -24,7 +24,7 @@ class AuthService {
       .then(function(response) {
         var jwt = response.status;
         if(jwt == 'ok'){
-          em.emit('login', response.code);
+          em.emit('login', response.client);
           return true;
         }
       });

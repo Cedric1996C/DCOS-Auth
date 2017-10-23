@@ -2,7 +2,11 @@ import React from 'react/addons';
 import ReactMixin from 'react-mixin';
 import Auth from '../service/AuthService'
 import { LOGIN_URL, RETURN_URL } from '../constants/LoginConstants';
-import em from './em'
+import em from './em';
+import request from 'reqwest';
+import when from 'when';
+
+import client from '../../lib/client';
 
 export default class Login extends React.Component {
 
@@ -12,13 +16,23 @@ export default class Login extends React.Component {
       user: '',
       password: ''
     };
-    em.on('login', function(code) {
-      console.log('logg in');
+    em.on('login', function(client) {
+      console.log('logg in '+client.redirectUrl);
       $('#failAlert').hide()
       $('#successAlert').show();
-      window.location = RETURN_URL+'?code='+code;
-      // window.parent.postMessage(JSON.stringify({ type: 'token', token: { uid: this.state.user } }), RETURN_URL)
-      // window.close()
+
+      //temporary set
+      client.redirectUrl='localhost:4200';
+
+      when(request({
+        url: `http://${client.redirectUrl}/auth?code=${client.code}`,
+        method: 'GET',
+        crossOrigin: true,
+        type: 'json',
+      })
+      .then(function(res){
+        console.log('success');
+      }))
     }.bind(this))
   }
 
