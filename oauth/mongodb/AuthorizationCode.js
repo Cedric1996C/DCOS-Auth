@@ -9,7 +9,7 @@ var AuthorizationCodeSchema = new Schema({
   redirect_uri:  String,
   scope:  String,
   User:  { type : Schema.Types.ObjectId, ref: 'User' },
-  Client: { type : Schema.Types.ObjectId, ref: 'OAuthClient' },
+  Client: { type : Schema.Types.ObjectId, ref: 'Client' },
 });
 
 module.exports = mongoose.model('AuthorizationCode', AuthorizationCodeSchema);

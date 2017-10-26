@@ -4,7 +4,6 @@ var router = express.Router();
 const oauth = require('../oauth');
 
 router.get('/', function(req, res, next){
-    // console.log("good get")
 	oauth.authorizeHandler(req, res);
 });
 

@@ -36,6 +36,7 @@ function getAuthorizationCode(code){
     .populate('Client')
     .then(function (authCodeModel) {
       if (!authCodeModel) return false;
+      console.log(authCodeModel)
       var client = authCodeModel.Client
       var user = authCodeModel.User
       return reCode = {
@@ -65,7 +66,6 @@ function getClient(client, secret){
       	grants: ["authorization_code"],
       	redirectUris: [client.redirect_uri]
       };
-      console.log(rClient);
       return rClient;
     }).catch(function (err) {
       console.log("getClient - Err: ", err)
@@ -73,12 +73,11 @@ function getClient(client, secret){
 }
 
 function getUser(username) {
-	console.log("getUser: ",username);
   return User
     .findOne({username: username})
     .then(function (user) {
       console.log("user: ",user)
-      return true;
+      return user;
     })
     .catch(function (err) {
       console.log("getUser - Err: ", err)
@@ -105,15 +104,19 @@ function saveToken(token, client, user){
 
     ])
     .then(function(resultsArray) {
-      return _.assign(  // expected to return client and user, but not returning
+      // console.log("resultsArray:",resultsArray)
+      // console.log("token:",token)
+      var nToken = Object.assign(  // expected to return client and user, but not returning
         {
           client: client,
           user: user,
-          access_token: token.accessToken, // proxy
-          refresh_token: token.refreshToken, // proxy
+          // access_token: token.accessToken, // proxy
+          // refresh_token: token.refreshToken, // proxy
         },
         token
       )
+      console.log(nToken)
+      return nToken
     })
     .catch(function (err) {
       console.log("revokeToken - Err: ", err)
@@ -121,13 +124,13 @@ function saveToken(token, client, user){
 }
 
 function saveAuthorizationCode(code, client, user){
-	console.log("saveAuthorizationCode: ", code, client, user);
 	return AuthorizationCode
     .create({
   	  authorization_code: code.authorizationCode,
       expires: code.expiresAt,
-      Client: client._id,
-      User: user._id,
+      redirect_uri: code.redirect_uri,
+      Client: client.id,
+      User: user.id,
       scope: code.scope
     })
     .then(function () {
@@ -147,13 +150,9 @@ function saveAuthorizationCode(code, client, user){
 function revokeAuthorizationCode(code){
 	console.log("revokeAuthorizationCode",code)
 	  return AuthorizationCode
-	  .findOne({
-	    where: {
-	      authorization_code: code.code
-	    }
-	  })
+	  .findOne({ authorization_code: code.authorizationCode })
 	  .then(function (rCode) {
-	  	console.log(rCode);
+	  	console.log("result:",rCode);
 	    return rCode ? true:false;
 	  }).catch(function (err) {
 	    console.log("getUser - Err: ", err)

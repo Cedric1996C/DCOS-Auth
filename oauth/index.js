@@ -1,14 +1,25 @@
 const oauthServer = require('oauth2-server');
 const Request = oauthServer.Request;
 const Response = oauthServer.Response;
-// const db = require('./mongodb');
+
+const db = require('./mongodb');
+const User = db.User;
+
 const oauth = new oauthServer({
 	model: require('./models.js'),
 	authenticateHandler: {
-        handle: (req, res) => {
+        handle: function(req, res){
         	// console.log("new handler")
+        	return User.findOne({username: req.query.username})
+        	.then(function(user){
+        		console.log(user)
+        		return user
+        	})
+        	.catch( err => {
+        		console.log("Err: find User");
+        	})
             // Whatever you need to do to authorize / retrieve your user from post data here
-            return {user: "new user"};
+            // return {user: req.query.username};
         }
     },
     allowEmptyState: true,
@@ -30,7 +41,20 @@ function authorizeHandler(req, res, options) {
 	  });
 }
 
+function tokenHandler(req, res, options) {
+    let request = new Request(req);
+    let response = new Response(res);
+    return oauth.token(request, response, options)
+      .then(function(token) {
+        res.locals.oauth = {token: token};
+        res.send(token);
+      })
+      .catch(function(err) {
+        // handle error condition
+      });
+};
 
 module.exports = {
 	authorizeHandler: authorizeHandler,
+	tokenHandler: tokenHandler,
 };
