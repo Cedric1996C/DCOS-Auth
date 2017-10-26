@@ -14,27 +14,25 @@ export default class Login extends React.Component {
       user: '',
       password: ''
     };
-    em.on('login', function(client) {
-      console.log('logg in '+client.redirectUrl);
+    em.on('login', function(username, search) {
       $('#failAlert').hide()
       $('#successAlert').show();
 
-      //temporary set
-      client.redirectUrl='localhost:4200';
-
+      const url = `${window.location.origin}/authorize${search}`;
+      console.log(url)
       when(request({
-        url: `http://${client.redirectUrl}/auth?code=${client.code}`,
+        url: url,
         method: 'GET',
         crossOrigin: true,
         type: 'json',
       })
-      .then(function(res){
-        console.log('success');
+      .then(function(code){
+       var Code = code.code
+        window.location = `${Code.redirectUri}/?code=${Code.authorizationCode}`
+      })
+      .catch( err => {
+        console.log("no res")
       }))
-
-      // window.location = `http://${client.redirectUrl}?code=${client.code}`;
-      // window.parent.postMessage(JSON.stringify({ type: 'token', token: { uid: this.state.user } }), `${client.redirectUrl}?code=${client.code}`);
-
       // window.close()
     }.bind(this))
   }
