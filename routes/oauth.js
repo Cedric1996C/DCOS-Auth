@@ -3,8 +3,6 @@ var router = express.Router();
 var path = require('path');
 
 var dirname = require('../config').root;
-var getAccessToken = require('../lib/getAccessToken');
-var client = require('../lib/client');
 
 /* POST accessToken. */
 router.post('/', function(req, res, next){

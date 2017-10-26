@@ -3,13 +3,11 @@ var router = express.Router();
 var path = require('path');
 
 var dirname = require('../config').root;
-var authorize = require('../lib/authorize');
-var codeGenerator = require('../lib/codeGenerator');
 
 /* GET home page. */
 router.get('/',function(req, res, next){
 	// console.log(req.url);
-	authorize(req.url);
+	// authorize(req.url);
 	next();
 })
 

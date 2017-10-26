@@ -6,8 +6,6 @@ import em from './em';
 import request from 'reqwest';
 import when from 'when';
 
-import client from '../../lib/client';
-
 export default class Login extends React.Component {
 
   constructor() {
@@ -33,6 +31,11 @@ export default class Login extends React.Component {
       .then(function(res){
         console.log('success');
       }))
+
+      // window.location = `http://${client.redirectUrl}?code=${client.code}`;
+      // window.parent.postMessage(JSON.stringify({ type: 'token', token: { uid: this.state.user } }), `${client.redirectUrl}?code=${client.code}`);
+
+      // window.close()
     }.bind(this))
   }
 
