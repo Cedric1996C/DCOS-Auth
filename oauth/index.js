@@ -47,6 +47,9 @@ function tokenHandler(req, res, options) {
     return oauth.token(request, response, options)
       .then(function(token) {
         res.locals.oauth = {token: token};
+        res.header('Access-Control-Allow-Origin', '*');
+	    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+	    res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
         res.send(token);
       })
       .catch(function(err) {

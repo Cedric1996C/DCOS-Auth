@@ -18,7 +18,7 @@ export default class Login extends React.Component {
       $('#failAlert').hide()
       $('#successAlert').show();
 
-      const url = `${window.location.origin}/authorize${search}`;
+      const url = `${window.location.origin}/authorize${search}&username=${username}`;
       console.log(url)
       when(request({
         url: url,
@@ -27,7 +27,7 @@ export default class Login extends React.Component {
         type: 'json',
       })
       .then(function(code){
-       var Code = code.code
+        var Code = code.code
         window.location = `${Code.redirectUri}/?code=${Code.authorizationCode}`
       })
       .catch( err => {

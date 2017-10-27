@@ -14,7 +14,7 @@ var User = mongodb.User
 User.find({}).remove()
   .then(function() {
     User.create({
-        username: 'cong'
+        username: '141220045'
       })
       .then(function(user) {
         console.log('finished populating users',user);
