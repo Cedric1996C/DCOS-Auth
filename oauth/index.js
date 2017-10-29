@@ -23,6 +23,7 @@ const oauth = new oauthServer({
         }
     },
     allowEmptyState: true,
+    accessTokenLifetime: 30 * 24 * 60 * 60,
 });
 
 function authorizeHandler(req, res, options) {

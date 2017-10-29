@@ -19,7 +19,6 @@ export default class Login extends React.Component {
       $('#successAlert').show();
 
       const url = `${window.location.origin}/authorize${search}&username=${username}`;
-      console.log(url)
       when(request({
         url: url,
         method: 'GET',
