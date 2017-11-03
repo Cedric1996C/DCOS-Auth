@@ -109,9 +109,7 @@ function saveToken(token, client, user){
       var nToken = Object.assign(  // expected to return client and user, but not returning
         {
           client: client,
-          user: user,
-          // access_token: token.accessToken, // proxy
-          // refresh_token: token.refreshToken, // proxy
+          user: user
         },
         token
       )

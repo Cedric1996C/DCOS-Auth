@@ -1,7 +1,6 @@
-
 'use strict';
 var mongodb = require('./mongodb');
-
+var config = require('../config');
 // var Thing = mongodb.Thing;
 var AccessToken = mongodb.AccessToken
 var AuthorizationCode = mongodb.AuthorizationCode
@@ -21,9 +20,9 @@ User.find({}).remove()
         return Client.find({}).remove()
           .then(function() {
             Client.create({
-                client_id:'dc-njuics-cn',
-                client_secret:'dcos-nap',
-                redirect_uri:'http://localhost:4200',
+                client_id: config.client_id,
+                client_secret: config.client_secret,
+                redirect_uri: config.DCOSUI_URL,
                 User:user._id
               })
               .then(function(client) {

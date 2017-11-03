@@ -11,7 +11,7 @@ var express      = require('express'),
 var index = require('./routes/index');
 var oauth = require('./routes/oauth');
 var authorize = require('./routes/authorize');
-// var login = require('./routes/login');
+var token = require('./routes/token');
 
 var app = express();
 app.use(express.static('public'))
@@ -24,20 +24,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(passport.initialize());
 
-var whitelist = ['http://localhost:3000', 'http://localhost:3001']
-var corsOptionsDelegate = function (req, callback) {
-  var corsOptions;
-  if (whitelist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-  }else{
-    corsOptions = { origin: false } // disable CORS for this request
-  }
-  callback(null, corsOptions) // callback expects two parameters: error and options
-}
+// var whitelist = ['http://localhost:3000', 'http://localhost:3001']
+// var corsOptionsDelegate = function (req, callback) {
+//   var corsOptions;
+//   if (whitelist.indexOf(req.header('Origin')) !== -1) {
+//     corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+//   }else{
+//     corsOptions = { origin: false } // disable CORS for this request
+//   }
+//   callback(null, corsOptions) // callback expects two parameters: error and options
+// }
 
 app.use('/',index);
-app.use('/oauth',cors(corsOptionsDelegate),oauth);
-// app.use('/login',login);
+app.use('/oauth',oauth);
+// To add cors to restrict getting User Token 
+app.use('/token',token); 
 app.use('/authorize',authorize);
 
 app.post('/login', passport.authenticate('ldapauth', {session: false}), function(req, res) {

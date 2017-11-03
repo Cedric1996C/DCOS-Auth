@@ -2,6 +2,7 @@ const oauthServer = require('oauth2-server');
 const Request = oauthServer.Request;
 const Response = oauthServer.Response;
 
+const models = require('./models');
 const db = require('./mongodb');
 const User = db.User;
 
@@ -54,11 +55,17 @@ function tokenHandler(req, res, options) {
         res.send(token);
       })
       .catch(function(err) {
+        console.log("tokenHandler Err: ");
         // handle error condition
       });
 };
 
+function getUserToken(req, res, options) {
+    return models.getUser(req.query.username);
+}
+
 module.exports = {
 	authorizeHandler: authorizeHandler,
 	tokenHandler: tokenHandler,
+    getUserToken: getUserToken
 };
