@@ -1,4 +1,4 @@
-import request from 'request';
+import request from 'reqwest';
 import when from 'when';
 import {LOGIN_URL, SIGNUP_URL} from '../constants/LoginConstants';
 import em from '../components/em'
@@ -7,7 +7,7 @@ import em from '../components/em'
 class AuthService {
 
   login(username, password) {
-    return this.handleAuth(when(request({
+    return when(request({
       url: LOGIN_URL,
       method: 'POST',
       crossOrigin: true,
@@ -16,18 +16,14 @@ class AuthService {
          username: username,
          password: password
       }
-    })));
-  }
-
-  handleAuth(loginPromise) {
-    return loginPromise
-      .then(function(response) {
-        var jwt = response.status;
-        if(jwt == 'ok'){
-          em.emit('login');
+    })).then(function(response) {
+        const status = response.status;
+        const search = window.location.search
+        if(status == 'ok'){
+          em.emit('login', username, search);
           return true;
         }
-      });
+      });;
   }
 }
 

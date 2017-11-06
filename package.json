@@ -31,7 +31,8 @@
     "watch-css": "nodemon -e css --ignore public/app.css --exec 'rework-npm index.css -o public/app.css'",
     "lint-eslint": "eslint .",
     "lint-jscs": "jscs .",
-    "lint": "npm run lint-eslint && npm run lint-jscs"
+    "lint": "npm run lint-eslint && npm run lint-jscs",
+    "seed": "node oauth/seed.js"
   },
   "license": "MIT",
   "bugs": {
@@ -56,8 +57,11 @@
     "browser-sync": "^2.1.6",
     "browserify": "^8.0.3",
     "clean-css": "^3.1.9",
+    "cors": "^2.8.4",
     "eslint": "^0.14.1",
     "express": "^4.15.3",
+    "mongoose": "^4.10.4",
+    "node-oauth2-server": "^2.4.0",
     "nodemon": "^1.5.0",
     "rework": "^1.0.1",
     "rework-npm": "^1.0.0",

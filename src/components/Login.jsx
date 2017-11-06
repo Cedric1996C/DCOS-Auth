@@ -2,7 +2,9 @@ import React from 'react/addons';
 import ReactMixin from 'react-mixin';
 import Auth from '../service/AuthService'
 import { LOGIN_URL, RETURN_URL } from '../constants/LoginConstants';
-import em from './em'
+import em from './em';
+import request from 'reqwest';
+import when from 'when';
 
 export default class Login extends React.Component {
 
@@ -12,12 +14,25 @@ export default class Login extends React.Component {
       user: '',
       password: ''
     };
-    em.on('login', function () {
-      console.log('logg in')
+    em.on('login', function(username, search) {
       $('#failAlert').hide()
       $('#successAlert').show();
-      window.parent.postMessage(JSON.stringify({ type: 'token', token: { uid: this.state.user } }), RETURN_URL)
-      window.close()
+
+      const url = `${window.location.origin}/authorize${search}&username=${username}`;
+      when(request({
+        url: url,
+        method: 'GET',
+        crossOrigin: true,
+        type: 'json',
+      })
+      .then(function(code){
+        var Code = code.code
+        window.location = `${Code.redirectUri}/?code=${Code.authorizationCode}`
+      })
+      .catch( err => {
+        console.log("no res")
+      }))
+      // window.close()
     }.bind(this))
   }
 
