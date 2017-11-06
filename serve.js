@@ -11,7 +11,6 @@ var express      = require('express'),
 var index = require('./routes/index');
 var oauth = require('./routes/oauth');
 var authorize = require('./routes/authorize');
-var token = require('./routes/token');
 
 var app = express();
 app.use(express.static('public'))
@@ -37,8 +36,7 @@ app.use(passport.initialize());
 
 app.use('/',index);
 app.use('/oauth',oauth);
-// To add cors to restrict getting User Token 
-app.use('/token',token); 
+// To add cors to restrict getting User Token  
 app.use('/authorize',authorize);
 
 app.post('/login', passport.authenticate('ldapauth', {session: false}), function(req, res) {

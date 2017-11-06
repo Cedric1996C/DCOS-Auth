@@ -7,7 +7,7 @@ var RefreshTokenSchema = new Schema({
   refresh_token: String,
   expires: Date,
   scope:  String,
-  User:  { type : Schema.Types.ObjectId, ref: 'User' },
+  // User:  { type : Schema.Types.ObjectId, ref: 'User' },
   Client: { type : Schema.Types.ObjectId, ref: 'Client' },
 });
 

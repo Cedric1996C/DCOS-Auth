@@ -6,6 +6,9 @@ var Config = {
     LOGINAUTH_PORT: 3000,
     root: __dirname,
    	clientId: "dc-njuics-cn",
-  	secret: "dcos-nap"
+  	secret: "dcos-nap",
+  	mongodbConfig: "mongodb://localhost/dcos-auth",
+  	server_url: ""
 }
+
 module.exports = Config;

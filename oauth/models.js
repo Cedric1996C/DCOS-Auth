@@ -11,7 +11,7 @@ function getAccessToken(bearerToken){
   return AccessToken
   //User,OAuthClient
     .findOne({access_token: bearerToken})
-    .populate('User')
+    // .populate('User')
     .populate('Client')
     .then(function (accessToken) {
       console.log('at',accessToken)
@@ -75,6 +75,7 @@ function getClient(client, secret){
 function getUser(username) {
   return User
     .findOne({username: username})
+    .populate('AccessToken')
     .then(function (user) {
       console.log("user: ",user)
       return user;
@@ -91,14 +92,14 @@ function saveToken(token, client, user){
         access_token: token.accessToken,
         expires: token.accessTokenExpiresAt,
         Client: client._id,
-        User: user._id,
+        // User: user._id,
         scope: token.scope
       }),
       token.refreshToken ? RefreshToken.create({ // no refresh token for client_credentials
         refresh_token: token.refreshToken,
         expires: token.refreshTokenExpiresAt,
         Client: client._id,
-        User: user._id,
+        // User: user._id,
         scope: token.scope
       }) : [],
 

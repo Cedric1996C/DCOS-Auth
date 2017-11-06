@@ -1,10 +1,12 @@
 const oauthServer = require('oauth2-server');
 const Request = oauthServer.Request;
 const Response = oauthServer.Response;
+const request = require('request');
 
 const models = require('./models');
 const db = require('./mongodb');
 const User = db.User;
+const config = require('../config');
 
 const oauth = new oauthServer({
 	model: require('./models.js'),
@@ -50,9 +52,10 @@ function tokenHandler(req, res, options) {
       .then(function(token) {
         res.locals.oauth = {token: token};
         res.header('Access-Control-Allow-Origin', '*');
-	    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-	    res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
+	      res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+	      res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
         res.send(token);
+        request.post(config.server_url, {form: token});
       })
       .catch(function(err) {
         console.log("tokenHandler Err: ");
@@ -60,12 +63,7 @@ function tokenHandler(req, res, options) {
       });
 };
 
-function getUserToken(req, res, options) {
-    return models.getUser(req.query.username);
-}
-
 module.exports = {
 	authorizeHandler: authorizeHandler,
 	tokenHandler: tokenHandler,
-    getUserToken: getUserToken
 };
