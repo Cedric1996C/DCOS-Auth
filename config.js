@@ -8,7 +8,7 @@ var Config = {
    	clientId: "dc-njuics-cn",
   	secret: "dcos-nap",
   	mongodbConfig: "mongodb://localhost/dcos-auth",
-  	server_url: ""
+  	token_destination: ""
 }
 
 module.exports = Config;

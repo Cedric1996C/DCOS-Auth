@@ -5,8 +5,7 @@ var express      = require('express'),
     bodyParser   = require('body-parser'),
     LdapStrategy = require('passport-ldapauth'),
     LdapConfig   = require('./config/ldapConfig'),
-    cors         = require('cors'),
-    OAuthServer  = require('express-oauth-server');
+    cors         = require('cors');
 
 var index = require('./routes/index');
 var oauth = require('./routes/oauth');

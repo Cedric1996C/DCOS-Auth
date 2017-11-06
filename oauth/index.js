@@ -55,7 +55,7 @@ function tokenHandler(req, res, options) {
 	      res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
 	      res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
         res.send(token);
-        request.post(config.server_url, {form: token});
+        request.post(config.token_destination, {form: token});
       })
       .catch(function(err) {
         console.log("tokenHandler Err: ");
