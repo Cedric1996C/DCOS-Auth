@@ -5,8 +5,8 @@ var Config = {
     LOGINAUTH_URL: 'http://localhost:3000',
     LOGINAUTH_PORT: 3000,
     root: __dirname,
-   	clientId: "dc-njuics-cn",
-  	secret: "dcos-nap",
+   	client_id: "dc-njuics-cn",
+  	client_secret: "dcos-nap",
   	mongodbConfig: "mongodb://localhost/dcos-auth",
   	token_destination: ""
 }

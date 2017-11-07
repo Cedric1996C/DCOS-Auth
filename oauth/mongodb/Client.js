@@ -8,8 +8,7 @@ var ClientSchema = new Schema({
   client_secret: String,
   redirect_uri: String,
   grant_types: String,
-  scope: String,
-  User:  { type : Schema.Types.ObjectId, ref: 'User' },
+  scope: String
 });
 
 module.exports = mongoose.model('Client', ClientSchema);
