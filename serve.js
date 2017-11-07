@@ -22,17 +22,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(passport.initialize());
 
-// var whitelist = ['http://localhost:3000', 'http://localhost:3001']
-// var corsOptionsDelegate = function (req, callback) {
-//   var corsOptions;
-//   if (whitelist.indexOf(req.header('Origin')) !== -1) {
-//     corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-//   }else{
-//     corsOptions = { origin: false } // disable CORS for this request
-//   }
-//   callback(null, corsOptions) // callback expects two parameters: error and options
-// }
-
 app.use('/',index);
 app.use('/oauth',oauth);
 // To add cors to restrict getting User Token  
@@ -46,4 +35,4 @@ app.post('/login', passport.authenticate('ldapauth', {session: false}), function
   res.send({ status: 'ok' });
 });
 
-app.listen(config.LOGINAUTH_PORT);
+app.listen(config.loginauth_port);
