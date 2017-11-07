@@ -1,14 +1,15 @@
 import request from 'reqwest';
 import when from 'when';
-import {LOGIN_URL, SIGNUP_URL} from '../constants/LoginConstants';
+// import {loginauth_url} from '../../config'
 import em from '../components/em'
+var login_url = require('../../config').loginauth_url;
 
 
 class AuthService {
 
   login(username, password) {
     return when(request({
-      url: LOGIN_URL,
+      url: '/login',
       method: 'POST',
       crossOrigin: true,
       type: 'json',

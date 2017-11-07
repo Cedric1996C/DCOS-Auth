@@ -1,7 +1,6 @@
 import React from 'react/addons';
 import ReactMixin from 'react-mixin';
 import Auth from '../service/AuthService'
-import { LOGIN_URL, RETURN_URL } from '../constants/LoginConstants';
 import em from './em';
 import request from 'reqwest';
 import when from 'when';
